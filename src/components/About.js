@@ -2,13 +2,13 @@ import { Component } from "react";
 import UserClass from "./UserClass";
 
 class About extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     console.log("Parent constructor");
   }
 
   componentDidMount() {
-    console.log("Parent componentDidMount")
+    console.log("Parent componentDidMount");
   }
 
   render() {
@@ -17,7 +17,8 @@ class About extends Component {
       <div>
         <h1>About</h1>
         <h2>This is Namaste React Web Series</h2>
-        <UserClass name={"Ashish Ambre (Class)"} location={"Mumbai Class"}/>
+        <UserClass name={"First"} location={"Mumbai Class"} />
+        <UserClass name={"Second"} location={"US"} />
       </div>
     );
   }
