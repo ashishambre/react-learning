@@ -4,30 +4,43 @@ class UserClass extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 0,
+      userInfo: {
+        name: "John Doe", 
+        location: "Default location",
+      }
     };
-    console.log("Child constructor");
+    console.log(this.props.name + "Child constructor");
   }
 
-  componentDidMount() {
-    console.log("Child componentDidMount");
+  async componentDidMount() {
+    console.log(this.props.name + "Child componentDidMount");
+
+    const data = await fetch("https://api.github.com/users/ashishambre");
+    const json = await data.json();
+    
+    this.setState({
+      userInfo: json,
+    })
   }
   
-  render() {
-    const { name, location } = this.props;
-    const { count } = this.state;
+  componentDidUpdate() {
+    console.log(this.props.name + "Child componentDidUpdate");
+  }
 
-    console.log("Child render");
+  componentWillUnmount() {
+    console.log(this.props.name + "Child componentWillUnmount");
+  }
+
+  render() {
+    // const { name, location } = this.props;
+    // const { count } = this.state;
+
+    const { name, location, avatar_url } = this.state.userInfo;
+    console.log(this.props.name + "Child render");
 
     return (
       <div className="user-card">
-        <h1>Count: {count}</h1>
-        <button onClick={() => {
-          // NEVER UPDATE STATE VARIABLES DIRECTLY
-          this.setState({
-            count: this.state.count + 1,
-          })
-        }}>Count++</button> 
+        <img src={avatar_url}/>
         <h2>Name: {name}</h2>
         <h3>Location: {location}</h3>
         <h4>Contact: @ashishambre</h4>
@@ -37,3 +50,27 @@ class UserClass extends React.Component {
 }
 
 export default UserClass;
+
+/**
+ * ---- MOUNTING ----
+ * 
+ * Constructor (dummy)
+ * Render (dummy)
+ * 
+ *  <HTML (dummy)>
+ * componentDidMount
+ *  <API call> 
+ *  <this.setState> --> State variable is updated
+ * 
+ * ---- UPDATE -----
+ * 
+ *  render (API data)
+ *  <MTML (new API data)
+ *  componentDidUpdate
+ * 
+ * ---- UNMOUNTING ---- 
+ * willComponentUnmount
+ * 
+ *  ** unmouting happens when you go to the different page
+ * 
+ */
